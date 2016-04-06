@@ -1,0 +1,94 @@
+/**
+ * White theme for reveal.js. This is the opposite of the 'black' theme.
+ *
+ * By Hakim El Hattab, http://hakim.se
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+// Include theme-specific fonts
+@import url(../../lib/font/source-sans-pro/source-sans-pro.css);
+
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #fff;
+
+$mainColor: #222;
+$headingColor: #72AD46;
+
+$mainFontSize: 38px;
+$mainFont: Helvetica, 'Source Sans Pro', sans-serif;
+$headingFont: Helvetica, 'Source Sans Pro', sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: uppercase;
+$headingFontWeight: 600;
+$linkColor: #2a76dd;
+$linkColorHover: lighten( $linkColor, 15% );
+$selectionBackgroundColor: lighten( $linkColor, 25% );
+
+$heading1Size: 2.5em;
+$heading2Size: 1.6em;
+$heading3Size: 1.3em;
+$heading4Size: 1.0em;
+
+section {
+	text-align: left;
+}
+section.has-dark-background {
+	&, h1, h2, h3, h4, h5, h6 {
+		color: #fff;
+	}
+}
+section.ebi-bg {
+	&, h1, h2, h3, h4, h5, h6 {
+		color: #fff;
+	}
+}
+section.ebi-bg::after {
+  position: absolute;
+  width: 105%;
+  height:19em;
+  left: 0em;
+  background: rgba(0,0,0,0) url("ebi/logo.png") no-repeat right center;
+  background-position: 97% bottom;
+  background-size: 4em;
+  content: ".";
+  color: rgba(0,0,0,0);
+}
+.reveal::before {
+  position: absolute;
+  bottom: 0em;
+  height:4em;
+  width: 100%;
+  left: 0em;
+  font-size: 0.5em;
+  background: #004342 url("ebi/logo.png") no-repeat right center;
+  background-size: 8em;
+  background-position: 97% center;
+  content: " ";
+}
+.reveal .controls {
+    top: 10px;
+    .navigate-left, .navigate-left.enabled{
+		border-right-color: #fab700 !important;
+	}
+    .navigate-right, .navigate-rigth.enabled{
+		border-left-color: #fab700 !important;
+	}
+    .navigate-up, .navigate-up.enabled{
+		border-bottom-color: #fab700 !important;
+	}
+    .navigate-down, .navigate-down.enabled{
+		border-top-color: #fab700 !important;
+	}
+}
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
