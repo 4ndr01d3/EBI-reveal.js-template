@@ -12,7 +12,7 @@
 
 
 // Include theme-specific fonts
-@import url(../../lib/font/source-sans-pro/source-sans-pro.css);
+@import url(../../lib/font/EBI/fonts.css);
 
 
 // Override theme settings (see ../template/settings.scss)
@@ -22,8 +22,8 @@ $mainColor: #222;
 $headingColor: #72AD46;
 
 $mainFontSize: 38px;
-$mainFont: Helvetica, 'Source Sans Pro', sans-serif;
-$headingFont: Helvetica, 'Source Sans Pro', sans-serif;
+$mainFont: 'HelveticaNeueLT Pro', Helvetica, 'Source Sans Pro', sans-serif;
+$headingFont: 'HelveticaNeueLT Pro', Helvetica, 'Source Sans Pro', sans-serif;
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
 $headingTextTransform: uppercase;
@@ -40,14 +40,13 @@ $heading4Size: 1.0em;
 section {
 	text-align: left;
 }
-section.has-dark-background {
-	&, h1, h2, h3, h4, h5, h6 {
-		color: #fff;
+section.ebi-bg, section.has-dark-background {
+	& {
+		color: #ded;
 	}
-}
-section.ebi-bg {
-	&, h1, h2, h3, h4, h5, h6 {
+	h1, h2, h3, h4, h5, h6 {
 		color: #fff;
+		text-shadow: 2px 2px 2px #222;
 	}
 }
 section.ebi-bg::after {

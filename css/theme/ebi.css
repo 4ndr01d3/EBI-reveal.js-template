@@ -3,15 +3,16 @@
  *
  * By Hakim El Hattab, http://hakim.se
  */
-@import url(../../lib/font/source-sans-pro/source-sans-pro.css);
+@import url(../../lib/font/EBI/fonts.css);
 section {
   text-align: left; }
 
-section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
-  color: #fff; }
+section.ebi-bg, section.has-dark-background {
+  color: #ded; }
 
-section.ebi-bg, section.ebi-bg h1, section.ebi-bg h2, section.ebi-bg h3, section.ebi-bg h4, section.ebi-bg h5, section.ebi-bg h6 {
-  color: #fff; }
+section.ebi-bg h1, section.ebi-bg h2, section.ebi-bg h3, section.ebi-bg h4, section.ebi-bg h5, section.ebi-bg h6, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
+  color: #fff;
+  text-shadow: 2px 2px 2px #222; }
 
 section.ebi-bg::after {
   position: absolute;
@@ -55,7 +56,7 @@ body {
   background-color: #fff; }
 
 .reveal {
-  font-family: Helvetica, "Source Sans Pro", sans-serif;
+  font-family: "HelveticaNeueLT Pro", Helvetica, "Source Sans Pro", sans-serif;
   font-size: 38px;
   font-weight: normal;
   color: #222; }
@@ -81,7 +82,7 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #72AD46;
-  font-family: Helvetica, "Source Sans Pro", sans-serif;
+  font-family: "HelveticaNeueLT Pro", Helvetica, "Source Sans Pro", sans-serif;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: normal;
