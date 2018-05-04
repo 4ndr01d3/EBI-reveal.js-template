@@ -1,0 +1,45 @@
+.mail, blockquote.mail {
+  font-size:0.65em;
+  width:95%;
+  background-color: aliceblue;
+  margin-bottom: 1.5em;
+}
+.mail::before, blockquote.mail::before {
+  content: attr(data-date);
+  position: relative;
+  float: right;
+  top: -1.5em;
+  font-family: monospace;
+  font-size: 0.6em;
+  color: darkgray;
+}
+.reveal section img {
+  border:0;
+}
+.reveal h2 {
+  text-transform: none;
+}
+
+.reveal section img.logo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  box-shadow: none;
+}
+
+b {
+  color: #004342;
+  font-weight: bolder;
+}
+div.stats {
+  display: flex;
+  font-size: 0.6em;
+}
+div.stats>div{
+  margin-right: 2em;
+  background-color: #F0F8F2;
+}
+div.stats tr td:nth-child(2){
+  font-family: monospace;
+  text-align: right;
+}
