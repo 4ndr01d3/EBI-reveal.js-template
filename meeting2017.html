@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>EBI template</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/ebi.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="style.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section data-background="css/theme/ebi/bg_gears.png" class="ebi-bg">
+					<h2>Choosing the storage tech for the InterPro API</h2>
+					<p>Protein Families Meeting</p>
+					<small>Gustavo A. Salazar</small><br/>
+					<small>April 2017</small>
+				</section>
+
+				<section >
+					<h2>Interhelp</h2>
+					<blockquote class="fragment fade-up mail" data-date="05/07/2016">
+						Is there a method, either through an InterPro API, or through InterProScan to search the InterPro database not by sequence but instead <u>by protein name</u>?
+					</blockquote>
+					<blockquote class="fragment fade-up mail" data-date="05/07/2016">
+						I'm looking for a RESTful web service to query InterPro with a protein ID/Access like in the Interpro home page (http://www.ebi.ac.uk/interpro) and retrieving the results in <u>JSON or XML</u>.
+					</blockquote>
+					<blockquote class="fragment fade-up mail" data-date="15/05/2016">
+					 is there a way to access the InterPro <u>Domain Architecture (IDA)</u> tool programmatically, e.g., via a REST API?
+				 </blockquote>
+				 <blockquote class="fragment fade-up mail" data-date="20/03/2017">
+				 	Is there any way to search for associated proteins and the relative coordinate with a <u>Pfam ID</u> from REST API please?
+ 				 </blockquote>
+				 <blockquote class="fragment fade-up mail" data-date="05/03/2017">
+					 I'd like to ask whether there is a way to extract all <u>protein domains in pfam</u> and for instance, define which domains are present in a protein via web api?
+				 </blockquote>
+				</section>
+
+				<section>
+					<section data-background="css/theme/ebi/bg_atoms.png" class="ebi-bg">
+						<h2>InterPro 7: API</h2>
+					</section>
+					<section>
+						<h2>InterPro 7: Architecture</h2>
+						<p style="text-align: center;">
+							<img data-src="img/interpro7-architecture.png" />
+						</p>
+					</section>
+					<section>
+						<h2>URL structure</h2>
+						<p style="text-align: center;">
+							<small>
+								<code class="small">https://&lt;ServerName>/
+									<span style="background-color: lightskyblue;">[ENTRY]</span>/
+									<span style="background-color: darkseagreen;">[PROTEOME]</span>/
+									<span style="background-color: bisque;">[PROTEIN]</span>/
+									<span style="background-color: palevioletred;">[STRUCTURE]</span>
+								</code>
+							</small>
+							<img data-src="img/URL-architecture.png" class="fragment fade-up" />
+							<small class="fragment fade-up" >
+								<code class="small" />[Block]:
+									<span style="background-color: lavender;">[ENDPOINT]</span>/
+									<span style="background-color: lavender;">[DATABASE]</span>/
+									<span style="background-color: lavender;">[ACCESSION]</span>
+								</code>
+							</small>
+						</p>
+				</section>
+				<section>
+					<h2>Entry: URL structure</h2>
+					<p style="text-align: center; margin-bottom: -5px;">
+						<img data-src="img/Entry_sets.png" width="21%"/>
+						<img data-src="img/Entry_URL.png" width="75%" class="fragment fade-up" />
+					</p>
+					<small>
+						<code class="fragment fade-up">https://&lt;ServerName>/entry<br/>
+https://&lt;ServerName>/entry/interpro<br/>
+https://&lt;ServerName>/entry/pfam<br/>
+https://&lt;ServerName>/entry/interpro/pfam<br/>
+https://&lt;ServerName>/entry/interpro/pfam/PF00001</code></small>
+				</section>
+				<section>
+					<h2>Endpoints <span class="fragment fade-up"> - Nov 2016</span></h2>
+					<p style="text-align: center;">
+						<img data-src="img/current_endpoints.png" />
+					</p>
+					<div class="fragment fade-up" style="
+						position: absolute;
+				    top: 40%;
+				    left: 38%;
+				    width: 25%;
+				    height: 22%;
+				    background-color: rgba(255, 50,50,0.1);
+				    border-radius: 2em;
+				    border: 2px solid red;
+					"></div>
+				</section>
+			</section>
+			<section >
+				<section >
+					<h2>Data organization</h2>
+					<p>First attempt: <b>MySQL</b></p>
+					<img data-src="img/mysql_attempt.png" width="60%"/>
+					<small style="width: 34%; display: inline-block;margin-left: 1em;">
+						<b>Pros</b>
+						<ul>
+							<li>Reliable</li>
+							<li>Ease of cross-table</li>
+							<li>Returns exact counts</li>
+							<li>Can select subsets of results</li>
+							<li>Lots of experience in team</li>
+							<li>High support in Django - DRF</li>
+							<li>EBI supported</li>
+						</ul>
+						<br/><br/>
+						<b>Cons</b><br/>
+						<ul>
+							<li>SLOW for Protein related queries</li>
+							<li>Scalability</li>
+						</ul>
+					</small>
+				</section>
+				<section >
+					<h2>Data organization</h2>
+					<p>Second attempt: <b>Hybrid</b> (MySQL + No-normalized DB)</p>
+					<img data-src="img/doc_store_attempt.png" width="60%"/>
+					<small style="width: 34%; display: inline-block;margin-left: 1em;">
+						<b>Pros</b>
+						<ul>
+							<li>Number of JOINS reduced.</li>
+							<li>Django models are conserved</li>
+							<li>Speed at querying</li>
+							<li>Sharding</li>
+							<li>Replicates</li>
+						</ul>
+						<br/><br/>
+						<b>Cons</b><br/>
+						<ul>
+							<li>No SQL</li>
+							<li>Low support in Django</li>
+							<li>Either slow or unreliable for writing operations</li>
+							<li>Some of these technologies are too new</li>
+						</ul>
+					</small>
+
+				</section>
+			</section>
+			<section >
+				<section data-background="css/theme/ebi/bg_atoms.png" class="ebi-bg">
+					<h2>Strategy</h2>
+					<ul class="fragment fade-up">
+						<li>Shortlist potential technologies to use</li>
+						<li>Define a common dataset</li>
+						<li>Define a representative set of queries</li>
+						<li>Test performance</li>
+					</ul>
+				</section>
+				<section >
+					<h2>Technologies to test</h2>
+					<small>
+					<table>
+						<tr>
+							<td></td>
+							<td><img data-src="img/solr_logo.svg"  width="400px"/></td>
+							<td><img data-src="img/elastic_logo.svg" width="400px"/></td>
+							<td><img data-src="img/clickhouse_logo.png" width="400px"/></td>
+							<td><img data-src="img/postgresql_logo.png" width="400px"/></td>
+						</tr>
+						<tr class="fragment fade-up">
+							<td><b>Type</b></td>
+							<td>Search</td>
+							<td>Search</td>
+							<td>Column DB</td>
+							<td>Column DB (plugin)</td>
+						</tr>
+						<tr class="fragment fade-up">
+							<td><b>Interface</b></td>
+							<td>HTTP</td>
+							<td>HTTP</td>
+							<td>HTTP</td>
+							<td>ODBC, JDBC</td>
+						</tr>
+						<tr class="fragment fade-up">
+							<td><b>Query Language</b></td>
+							<td>Lucene (extended)</td>
+							<td>Lucene (extended)</td>
+							<td>SQL (subset)</td>
+							<td>SQL</td>
+						</tr>
+						<tr class="fragment fade-up">
+							<td><b>Aggregations</b></td>
+							<td>Facets</td>
+							<td>Aggregations</td>
+							<td>SQL</td>
+							<td>SQL</td>
+						</tr>
+						<tr class="fragment fade-up">
+							<td><b>JSON support</b></td>
+							<td>Yes</td>
+							<td>Yes</td>
+							<td>Yes</td>
+							<td>N/A</td>
+						</tr>
+						<tr class="fragment fade-up">
+							<td><b>Type of server</b></td>
+							<td>Java</td>
+							<td>Java</td>
+							<td>Native</td>
+							<td>Native</td>
+						</tr>
+					</table>
+				</small>
+				</section>
+				<section >
+					<h2>Data set</h2>
+					<p><b>Number of documents:</b> 340,480,753</p>
+					<div class="stats">
+						<div>
+							<b>Entry</b> (154,154)<br/><br/>
+							<table>
+								<tr><td>InterPro</td> <td>29,965</td></tr>
+								<tr><td>Panther</td> <td>86,618</td></tr>
+								<tr><td>ProDom</td> <td>1,844</td></tr>
+								<tr><td>Smart</td> <td>1,312</td></tr>
+								<tr><td>Pfam</td> <td>16,282</td></tr>
+								<tr><td>TIGRFAMs</td> <td>4,488</td></tr>
+								<tr><td>CDD</td> <td>11,005</td></tr>
+								<tr><td>HAMAP</td> <td>2,087</td></tr>
+								<tr><td>Merops</td> <td>1,115</td></tr>
+							</table>
+						</div>
+						<div>
+							<b>Protein</b> (60,604,408)<br/><br/>
+							<table>
+								<tr><td>Swiss-Prot</td> <td>536,539</td></tr>
+								<tr><td>TrEMBL</td> <td>60,095,598</td></tr>
+							</table>
+						</div>
+						<div>
+							<b>Structure</b> (115,743)<br/><br/>
+							<table>
+								<tr><td>PDB</td> <td>115,743</td></tr>
+							</table>
+						</div>
+
+				</div>
+				</section>
+				<section >
+					<h2>Queries</h2>
+					<small>
+						<p><b>Filter</b>:
+							<ol>
+								<li>All documents</li>
+								<li>Swissprot proteins</li>
+								<li>Trembl proteins</li>
+								<li>Specific accession</li>
+								<li>With a structure</li>
+								<li>Specific structure</li>
+								<li>Unintegrated entries</li>
+							</ol>
+						</p>
+						<p><b>Actions</b>:
+							<ol>
+								<li>group by entry_db and count</li>
+								<li>group by entry_db and count unique</li>
+								<li>group by protein_db and count unique</li>
+								<li>get unique entries</li>
+								<li>get unique entries (plus filter)</li>
+							</ol>
+						</p>
+					</small>
+					<img data-src="img/query.jpg"  width="50%"/>
+
+				</section>
+			</section>
+			<section >
+				<section >
+					<h2>Overall Results</h2>
+					<small>
+					<table>
+						<tr>
+							<td></td>
+							<td><img data-src="img/solr_logo.svg"  width="400px"/></td>
+							<td><img data-src="img/elastic_logo.svg" width="400px"/></td>
+							<td><img data-src="img/clickhouse_logo.png" width="400px"/></td>
+							<td><img data-src="img/postgresql_logo.png" width="400px"/></td>
+						</tr>
+						<tr class="fragment fade-up">
+							<td><b>Number of tests</b></td>
+							<td>35</td>
+							<td>35</td>
+							<td>35</td>
+							<td>30</td>
+						</tr>
+						<tr class="fragment fade-up">
+							<td><b>Total Execution Time (min)</b></td>
+							<td>6.03</td>
+							<td>2.89</td>
+							<td>2.68</td>
+							<td>287.60</td>
+						</tr>
+					</table>
+				</small>
+				</section>
+				<section >
+					<h2>Comparison - First run</h2>
+					<img data-src="img/comparison_1st.png" />
+				</section>
+				<section >
+					<h2>Comparison - Second run</h2>
+					<img data-src="img/comparison_2nd.png" />
+				</section>
+			</section>
+			<section>
+				<h2>And the winner is...</h2>
+					<div class="fragment fade-up ">
+
+
+						<p class="fragment fade-out">
+							<img data-src="img/oscar.jpeg"  class="logo"/>
+						La La Land...</p>
+					</div>
+					<div class="fragment fade-up">
+						<b>Elasticsearch</b>
+						<ul>
+							<li>Second Fastest First run</li>
+							<li>Best in second run</li>
+							<li>Big community</li>
+							<li>Some EBI projects already use it.</li>
+							<li>Easy development after having an API prototype working with Solr</li>
+						</ul>
+					</div>
+			</section>
+			<section>
+				<h2>Potential Future Work</h2>
+				<ul>
+					<li>Data source exclusively in elasticsearch</li>
+					<li>Investigate sharding and replicates</li>
+					<li>Stress testing</li>
+				</ul>
+			</section>
+
+
+			<section data-background="css/theme/ebi/bg_cells.png" class="ebi-bg">
+				<h2>Thanks!!</h2>
+			</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: false,
+
+				transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
